@@ -6,6 +6,12 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig
+
+current_dir = os.path.dirname(os.path.abspath('src\components\data_ingestion.py'))  # Get the current file's directory
+root_dir = os.path.abspath(os.path.join(current_dir, "src"))  # Navigate two levels up to the project root
+sys.path.append(root_dir)  #
 
 @dataclass
 class DataIngestionConfig:
@@ -50,4 +56,7 @@ class DataIngestion:
 
 if __name__=="__main__":
     obj = DataIngestion()
-    obj.initiate_data_ingestion()
+    train_data,test_data = obj.initiate_data_ingestion()
+    
+    data_transformation = DataTransformation()
+    data_transformation.initiate_data_transformation(train_data,test_data)
